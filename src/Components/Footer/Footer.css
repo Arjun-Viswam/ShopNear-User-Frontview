@@ -5,6 +5,7 @@
   }
   .footer-links {
     margin-top: 63px;
+    
   }
   .footer-links h4 {
     font-size: 18px;
@@ -23,6 +24,7 @@
     text-align: left;
     margin-bottom: 0;
     font-family: roboto, sans-serif;
+    text-decoration: none;
   }
   .footer-links ul li a:hover {
     color: rgba(255, 238, 0, 0.849)!important;
