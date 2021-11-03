@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import style from "./Body.module.css";
 import { Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Body() {
+  const [location, setLocation] = useState({
+    loaded: false,
+    coordinates: { lat: "", lng: "" },
+});
+  
+const onSuccess = (location) => {
+  setLocation({
+      loaded: true,
+      coordinates: {
+          lat: location.coords.latitude,
+          lng: location.coords.longitude,
+      },
+  });
+};
+
+const onError = (error) => {
+  setLocation({
+      loaded: true,
+      error: {
+          code: error.code,
+          message: error.message,
+      },
+  });
+};
+
+  function getLocation(){
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  }
+  
   return (
     <div className={`${style.Body} container`}>
       <div className={style.row}>
@@ -13,15 +42,29 @@ function Body() {
               Shop from your Near Store
             </h1>
           </div>
+           
           <div className={style.location}>
                 <i class="fas fa-map-marker-alt"></i>
+               
+                { location.loaded ?
+                <input
+                  class={style.input_icons}
+                  type="text"
+                  
+                  name=""
+                  id=""
+                  value={`${JSON.stringify(location)}`}
+                />
+                :
                 <input
                   class={style.input_icons}
                   type="text"
                   placeholder="Current Location"
                   name=""
                   id=""
+                   onClick={getLocation}
                 />
+                }
             </div>
           <div className="col-12 col-md-9">
             <img className={`${style.image}`} src="/images/favpng.png" alt="" />
@@ -34,8 +77,8 @@ function Body() {
               <h1 className={style.titleTwo}>AMAZING FEATURES</h1>
             </div>
           </div>
-          <div className= {`${style.cardIn} col-12 col-md-6`} style={{display:"flex",justifyContent:"right",marginTop:"80px"}}>
-          <Card style={{ width: "40rem",border:"none" }}>
+          <div className= {`${style.cardIn} col-12 col-md-6`} style={{marginTop:"80px"}}>
+          <Card style={{ border:"none" }}>
               <Card.Body style={{backgroundColor:"#e2e5e6"}}>
               <img src='/images/PikPng.png' style={{width:'121px',height:'96px',float:"left"}} alt='' />
                 <Card.Title><h2>Find Local Stores</h2></Card.Title>
@@ -45,8 +88,8 @@ function Body() {
               </Card.Body>
             </Card> 
           </div>
-          <div className={`${style.cardIn} col-12 col-md-6`} style={{display:"flex",justifyContent:"left",marginTop:"80px"}}>
-          <Card style={{ width: "40rem",border:"none" }}>
+          <div className={`${style.cardIn} col-12 col-md-6`} style={{marginTop:"80px"}}>
+          <Card style={{ border:"none" }}>
               <Card.Body style={{backgroundColor:"#e2e5e6"}}>
               <img src='/images/PikPng.png' style={{width:'121px',height:'96px',float:"left"}} alt='' />
                 <Card.Title><h2>Accept Substitutes</h2></Card.Title>
@@ -56,8 +99,8 @@ function Body() {
               </Card.Body>
             </Card> 
           </div>
-          <div className={`${style.cardIn} col-12 col-md-6`} style={{display:"flex",justifyContent:"right",marginTop:"80px"}}>
-          <Card style={{ width: "40rem",border:"none" }}>
+          <div className={`${style.cardIn} col-12 col-md-6`} style={{marginTop:"80px"}}>
+          <Card style={{ border:"none" }}>
               <Card.Body style={{backgroundColor:"#e2e5e6"}}>
               <img src='/images/PikPng.png' style={{width:'121px',height:'96px',float:"left"}} alt='' />
                 <Card.Title><h2>Schedule Your Deliveries</h2></Card.Title>
@@ -67,8 +110,8 @@ function Body() {
               </Card.Body>
             </Card> 
           </div>
-          <div className={`${style.cardIn} col-12 col-md-6`} style={{display:"flex",justifyContent:"left",marginTop:"80px"}}>
-          <Card style={{ width: "40rem",border:"none" }}>
+          <div className={`${style.cardIn} col-12 col-md-6`} style={{marginTop:"80px"}}>
+          <Card style={{ border:"none" }}>
               <Card.Body style={{backgroundColor:"#e2e5e6"}}>
               <img src='/images/PikPng.png' style={{width:'121px',height:'96px',float:"left"}} alt='' />
                 <Card.Title><h2>Pay Online On Delivery</h2></Card.Title>
@@ -78,8 +121,8 @@ function Body() {
               </Card.Body>
             </Card> 
           </div>
-          <div className={`${style.cardIn} col-12 col-md-6`} style={{display:"flex",justifyContent:"right",marginTop:"80px"}}>
-          <Card style={{ width: "40rem",border:"none" }}>
+          <div className={`${style.cardIn} col-12 col-md-6`} style={{marginTop:"80px"}}>
+          <Card style={{ border:"none" }}>
               <Card.Body style={{backgroundColor:"#e2e5e6"}}>
               <img src='/images/PikPng.png' style={{width:'121px',height:'96px',float:"left"}} alt='' />
                 <Card.Title><h2>Track Your Orders</h2></Card.Title>
@@ -89,8 +132,8 @@ function Body() {
               </Card.Body>
             </Card> 
           </div>
-          <div className={`${style.cardIn} col-12 col-md-6`} style={{display:"flex",justifyContent:"left",marginTop:"80px"}}>
-          <Card style={{ width: "40rem",border:"none" }}>
+          <div className={`${style.cardIn} col-12 col-md-6`} style={{marginTop:"80px"}}>
+          <Card style={{ border:"none",display:"flex",justifyContent:"end" }}>
               <Card.Body style={{backgroundColor:"#e2e5e6"}}>
               <img src='/images/PikPng.png' style={{width:'121px',height:'96px',float:"left"}} alt='' />
                 <Card.Title><h2>24X7 Order Placement</h2></Card.Title>
@@ -163,7 +206,7 @@ function Body() {
             />
             <Card.Body>
               <Card.Title>
-                <h3>Order Smartly. Avoid Confusions</h3>
+                <h3>Order Smartly.No Confusions</h3>
               </Card.Title>
               <Card.Text>
                 Avoid the order confusions and mismatches that generally happen

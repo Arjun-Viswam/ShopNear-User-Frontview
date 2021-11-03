@@ -2,10 +2,12 @@ import React, { useRef, useState, useEffect } from "react";
 import "./Signup.css";
 import axios from "axios";
 import UserLogin from "../Components/UserLogin";
-import { useFormik, Form } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import cookie from "universal-cookie";
 import { useHistory } from "react-router";
+import { facebookProvider, googleProvider, githubProvider } from "../Components/AuthMethod";
+import socialMediaAuth from "../Components/SocialAuth";
 const server = "http://localhost:5550";
 
 function Login() {
@@ -22,13 +24,28 @@ function Login() {
 
   const [LoginError, setLoginError] = useState(false)
 
-  const FormSubmit = (event) => {
+  const handleOnclick = async ( provider ) => {
+    const res = await socialMediaAuth(provider)
+    axios.post(`${server}/socialAuth`, res).then((res) => {
+      if(res.data.data.providerId){
+        let data = JSON.parse(JSON.stringify(res.data.data.providerId));
+      Cookies.set("token", data.token);
+      history.push("/");
+      }else {
+      let data = JSON.parse(JSON.stringify(res.data));
+      Cookies.set("token", data.token);
+      localStorage.setItem("displayName", data.data.user.displayName);
+      history.push("/");
+      }
+    })
+  }
+
+  const FormSubmit = () => {
     const data = {};
     data.email = emailref.current.value;
     data.password = passwordref.current.value;
     axios.post(`${server}/userLogin`, data).then((res) => {
       let data = JSON.parse(JSON.stringify(res.data));
-      console.log(data.data);
       if(!data.data.status){
         setLoginError(true)
       }else {
@@ -39,6 +56,7 @@ function Login() {
       }
     });
   };
+
   let validate = Yup.object({
     email: Yup.string()
       .email("Please type a valid email")
@@ -47,6 +65,7 @@ function Login() {
       .min(6, "Must be more than 6 Characters")
       .required("Enter your password"),
   });
+
   let Formik = useFormik({
     initialValues: {
       email: "",
@@ -67,6 +86,11 @@ function Login() {
                 <div className="line-shape1">
                   <img src="/images/line.svg" alt="" />
                 </div>
+              </div>
+              <div class="login-box">
+              <a onClick={()=>handleOnclick(facebookProvider)} class="social-button" id="facebook-connect"> <span>Connect with Facebook</span></a>
+			        <a onClick={()=>handleOnclick(googleProvider)} class="social-button" id="google-connect"> <span>Connect with Google</span></a>
+              <a onClick={()=>handleOnclick(githubProvider)} class="social-button" id="google-connect"> <span>Connect with Github</span></a>
               </div>
               <form onSubmit={Formik.handleSubmit}>
                 <div className="form-group">

@@ -9,9 +9,7 @@ import firebase from "../firebase";
 import cookie from "universal-cookie";
 import { useHistory } from "react-router";
 import "react-phone-number-input/style.css";
-import PhoneInput, {
-  isValidPhoneNumber,
-} from "react-phone-number-input";
+import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 const server = "http://localhost:5550";
 
 function Signup() {
@@ -37,8 +35,9 @@ function Signup() {
   const [NotFound, setNotFound] = useState(false);
   const [TimeOut, setTimeOut] = useState(false);
   const [value, setValue] = useState();
+  const [MobileInput, setMobileInput] = useState(false);
 
-  const setUpRecaptcha = () => {
+  const setUpRecaptcha = () => { 
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
       "recaptcha-container",
       {
@@ -47,12 +46,12 @@ function Signup() {
           // reCAPTCHA solved, allow signInWithPhoneNumber.
           onSignInSubmit();
         },
-      }
-    );
+      });
   };
 
   const onSignInSubmit = (event) => {
     event.preventDefault();
+    if(value && isValidPhoneNumber(value)){
     let userData = {};
     userData.email = emailref.current.value;
     userData.mobile = value;
@@ -92,6 +91,9 @@ function Signup() {
       .catch((error) => {
         setNotFound(true);
       });
+    }else{
+      setMobileInput(true)
+    }
   };
 
   const otpSubmit = (event) => {
@@ -246,6 +248,7 @@ function Signup() {
                               }
                               required
                             />
+                            {MobileInput? <p style={{color:"red"}}>Enter a valid Number</p> : " "}
                             {MobileError ? (
                               <a className="error">
                                 Entered Mobile Number already Exist

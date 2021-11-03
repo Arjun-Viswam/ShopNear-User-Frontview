@@ -26,11 +26,13 @@
   margin-right: calc(-0.5 * var(--bs-gutter-x));
   margin-left: calc(-0.5 * var(--bs-gutter-x));
   justify-content: space-around;
+  margin-top: 41px;
+  margin-bottom: 41px;
 }
 .location{
     display: flex;
     align-items: center;
-    width: 280px;
+    width: 380px;
     margin: auto;
     position: absolute;
     align-self: center;
@@ -46,6 +48,8 @@
 .input_icons{
     border: none;
     margin-left: 5px;
+    width: 100%;
+    margin-right: 5px;
 }
 @media(max-width:1150px){
     .text_bold{
@@ -84,10 +88,6 @@
     font-weight: bolder;
     margin-top: 10px;
     margin-bottom: 25px;
-}
-.cardIn{
-    display: flex;
-    justify-content: center;
 }
 .text{
     margin-bottom: 25px;

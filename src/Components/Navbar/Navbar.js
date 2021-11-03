@@ -8,13 +8,26 @@ function Navbar() {
 
   let firstname = localStorage.getItem('firstname')
   let lastname = localStorage.getItem('lastname')
+  let displayName = localStorage.getItem('displayName')
   useEffect(()=>{
     if(Cookie.get("token")){
+      if(firstname && lastname){
       userName()
+      }else if(displayName){
+        authUser()
+      }else {
+        unIdentified()
+      }
     }
   })
   function userName(){
     setUser(firstname+' '+lastname)
+  }
+  function authUser(){
+    setUser(displayName)
+  }
+  function unIdentified(){
+    setUser("user name")
   }
   const Logout = ()=>{
     Cookie.remove("token")
@@ -24,29 +37,6 @@ function Navbar() {
 
   return (
     <div>
-      <div className="AboveNav row">
-        <div className="contact col-10">
-          <label>Email:shopnear@gmail.com / </label>
-          <label>phone:+91 8075829449</label>
-        </div>
-        <div className="dropdown  col-2">
-        <a
-          className="AccountName"
-          style={{ color: "rgba(255, 238, 0, 0.849)", textDecoration: "none" }}
-          href="https://"
-        >
-          <i class="fas fa-user"></i> 
-         {User?<a> {User}</a>:" Account"} 
-        </a>
-        <div class="dropdown-content">
-          {User?
-         <a style={{cursor:"pointer"}} onClick={Logout}>Logout</a>
-         :
-         <a href="/login">Login</a>
-          }
-        </div>
-        </div>
-      </div>
       <div className="nav">
         <input type="checkbox" id="nav-check" />
         <div className="nav-header">
@@ -90,6 +80,24 @@ function Navbar() {
               ></i>
             </a>
           </div>
+        </div>
+        
+        <div style={{color:'white',marginTop:'10px'}}  className="dropdown  ">
+        <a
+          className="AccountName"
+          style={{ color: "rgba(255, 238, 0, 0.849)", textDecoration: "none" }}
+          href="https://"
+        >
+          <i style={{marginRight:'10px',marginTop:'4px'}} class="fas fa-user "></i> 
+         {User?<a> {User}</a>:" Account"} 
+        </a>
+        <div class="dropdown-content  ">
+          {User?
+         <a style={{cursor:"pointer",color:'black',textAlign:'center'}} onClick={Logout}>Logout</a>
+         :
+         <a href="/login">Login</a>
+          }
+        </div>
         </div>
       </div>
     </div>
