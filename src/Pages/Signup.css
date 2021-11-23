@@ -1,4 +1,6 @@
-
+.largeCont{
+  padding: 7rem;
+}
 .lg_form {
   float: left;
   width: 100%;
@@ -76,9 +78,9 @@
     display: flex;
     justify-content: center;
 }
-.container123{
+/* .container{
     padding: 8rem;
-}
+} */
 .checkbox{
     padding-top: 5px;
 }
@@ -267,6 +269,45 @@ body {
 
 #google-connect:hover span {
   color: #FFF;
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  -ms-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+#linkedin-connect {
+  background: rgb(255, 255, 255) url('https://cdn.icon-icons.com/icons2/2368/PNG/512/github_logo_icon_143772.png') no-repeat scroll 11px 5px / 28px 33px padding-box border-box;
+  border: 1px solid rgb(5, 5, 5);
+}
+
+#linkedin-connect:hover {
+  border-color: rgb(10, 10, 10);
+  background: rgb(0, 0, 0) url('https://findicons.com/files/icons/2779/simple_icons/2048/github.png') no-repeat scroll 6px 0px / 36px 45px padding-box border-box;
+  -webkit-transition: all .8s ease-out;
+  -moz-transition: all .3s ease;
+  -ms-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease-out;
+}
+
+#linkedin-connect span {
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  text-align: center;
+  text-transform: uppercase;
+  border: 0px none rgb(0, 0, 0);
+  outline: rgb(255, 255, 255) none 0px;
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  -ms-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+#linkedin-connect:hover span {
+  color: rgb(255, 255, 255);
   -webkit-transition: all .3s ease;
   -moz-transition: all .3s ease;
   -ms-transition: all .3s ease;

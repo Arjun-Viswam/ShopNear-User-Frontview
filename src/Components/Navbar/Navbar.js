@@ -27,7 +27,7 @@ function Navbar() {
     setUser(displayName)
   }
   function unIdentified(){
-    setUser("user name")
+    setUser("unknown user")
   }
   const Logout = ()=>{
     Cookie.remove("token")
@@ -91,7 +91,7 @@ function Navbar() {
           <i style={{marginRight:'10px',marginTop:'4px'}} class="fas fa-user "></i> 
          {User?<a> {User}</a>:" Account"} 
         </a>
-        <div class="dropdown-content  ">
+        <div class="dropdown-content">
           {User?
          <a style={{cursor:"pointer",color:'black',textAlign:'center'}} onClick={Logout}>Logout</a>
          :

@@ -10,6 +10,7 @@ import cookie from "universal-cookie";
 import { useHistory } from "react-router";
 import "react-phone-number-input/style.css";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
+import Countdown from 'react-countdown';
 const server = "http://localhost:5550";
 
 function Signup() {
@@ -36,6 +37,7 @@ function Signup() {
   const [TimeOut, setTimeOut] = useState(false);
   const [value, setValue] = useState();
   const [MobileInput, setMobileInput] = useState(false);
+  const [HideInput, setHideInput] = useState(false)
 
   const setUpRecaptcha = () => { 
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
@@ -48,6 +50,51 @@ function Signup() {
         },
       });
   };
+
+  // useEffect(()=>{
+  //   const timer = 
+  //   counter > 0 && setInterval(()=> setCounter(counter - 1), 1000)
+  //   return () => clearInterval(timer)
+  // }, [counter])
+
+  // Random component
+const Completionist = () => <p>Resend Otp</p>;
+
+// Renderer callback with condition
+const renderer = ({ completed }) => {
+  if (completed) {
+    // Render a complete state
+    setHideInput(true)
+    // window.recaptchaVerifier.render().then(function(widgetId) {
+    //   grecaptcha.reset(widgetId);
+    // })
+    
+    // return <Completionist />;
+  }
+};
+  
+  function resendOTP(){
+    setHideInput(false)
+    const phoneNumber = value;
+    const appVerifier = window.recaptchaVerifier;
+    firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier).then((confirmationResult) => {
+      // SMS sent. Prompt user to type the code from the message, then sign the
+      // user in with confirmationResult.confirm(code).
+      window.confirmationResult = confirmationResult;
+      setInputData({
+        firstname: firstnameref.current.value,
+        lastname: lastnameref.current.value,
+        email: emailref.current.value,
+        mobile: value,
+        password: passwordref.current.value,
+      });
+      setShowActiveForm(true);
+    })
+    .catch((error) => {
+      // Error; SMS not sent
+      setNotFound(true);
+    });
+  }
 
   const onSignInSubmit = (event) => {
     event.preventDefault();
@@ -167,9 +214,9 @@ function Signup() {
                 />
               </div>
             ) : (
-              <div className="container123">
+              <div className="largeCont container">
                 <div className="row justify-content-center">
-                  <div className="col-md-4">
+                  <div className="col-md-7 col-lg-5">
                     <div className="lg_form">
                       <div className="main-heading">
                         <h2>Sign Up to Shop Near</h2>
@@ -223,15 +270,6 @@ function Signup() {
                           </div>
                           <div className="form-group">
                             <label className="label15">Phone Number*</label>
-                            {/* <DoValidation
-                              ref={mobileref}
-                              id="phone"
-                              type="tel"
-                              className="job-input"
-                              name="mobile"
-                              placeholder="Enter your Contact number"
-                              
-                            /> */}
                             <PhoneInput
                               country="US"
                               className="job-input"
@@ -291,13 +329,16 @@ function Signup() {
                         </Form>
                       ) : (
                         <Form onSubmit={otpSubmit}>
-                          <input
+                          {!HideInput?(<input
                             type="text"
                             ref={coderef}
                             className="job-input"
                             name="code"
                             placeholder="Enter the OTP"
-                          ></input>
+                          ></input>):null}
+                          
+                          <Countdown date={Date.now() + 30000} renderer={renderer}/>
+                          {/* <span style={{color:"green",fontWeight:"bold"}}>00:{showActiveForm?`${counter}`:null}</span> */}
                           <button type="submit" className="lr_btn">
                             Next
                           </button>

@@ -77,9 +77,9 @@ function Login() {
 
   return (
     <div>
-      <div className="container123">
+      <div className="largeCont container">
         <div className="row justify-content-center">
-          <div className="col-md-4">
+          <div className="col-md-7 col-lg-5">
             <div className="lg_form">
               <div className="main-heading">
                 <h2>Sign in to Jobby</h2>
@@ -90,7 +90,7 @@ function Login() {
               <div class="login-box">
               <a onClick={()=>handleOnclick(facebookProvider)} class="social-button" id="facebook-connect"> <span>Connect with Facebook</span></a>
 			        <a onClick={()=>handleOnclick(googleProvider)} class="social-button" id="google-connect"> <span>Connect with Google</span></a>
-              <a onClick={()=>handleOnclick(githubProvider)} class="social-button" id="google-connect"> <span>Connect with Github</span></a>
+              <a onClick={()=>handleOnclick(githubProvider)} class="social-button" id="linkedin-connect"> <span>Connect with Github</span></a>
               </div>
               <form onSubmit={Formik.handleSubmit}>
                 <div className="form-group">
